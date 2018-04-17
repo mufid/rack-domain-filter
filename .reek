@@ -1,0 +1,18 @@
+---
+Attribute:
+  enabled: false
+
+BooleanParameter:
+  enabled: false
+
+InstanceVariableAssumption:
+  enabled: false
+
+IrresponsibleModule:
+  enabled: false
+
+TooManyStatements:
+  enabled: false
+
+TooManyInstanceVariables:
+  enabled: false

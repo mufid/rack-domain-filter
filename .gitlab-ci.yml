@@ -1,0 +1,37 @@
+before_script:
+  - ruby -v
+  - which ruby
+  - gem install bundler --no-ri --no-rdoc
+  - bundle install --jobs $(nproc)  "${FLAGS[@]}"
+
+test:2.1-rspec: &default_rspec
+  image: ruby:2.1
+  script:
+    - bundle exec rspec
+  artifacts:
+    paths:
+      - spec/reports
+      - coverage
+
+lint:2.5: &default_rubocop
+  image: ruby:2.5
+  script:
+    - bundle exec reek
+    - bundle exec rubocop
+  allow_failure: true
+
+test:2.2-rspec:
+  <<: *default_rspec
+  image: ruby:2.2
+
+test:2.3-rspec:
+  <<: *default_rspec
+  image: ruby:2.3
+
+test:2.4-rspec:
+  <<: *default_rspec
+  image: ruby:2.4
+
+test:2.5-rspec:
+  <<: *default_rspec
+  image: ruby:2.5
