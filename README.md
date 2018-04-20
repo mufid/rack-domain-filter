@@ -21,7 +21,10 @@ See Yarddoc for more information.
 Suppose you have `Company` model. In Rails, you can do
 like this:
 
-    Rack::SubdomainCompany.configure do |config|
+    # Put this inside application.rb, or
+    # any environment file in config/environments/*.rb
+
+    Rack::DomainFilter.configure do |config|
       config.filter_for /(.+).local.dev/ do |slug|
         Thread.current[:company] = Company.find_by!(slug)
       end
@@ -63,3 +66,27 @@ this syntax:
         Thread.current[:company]
       end
     end
+
+You may want to put this into global filter. This
+is quick but dirty solution.
+
+    class ApplicationRecord < ActiveRecord::Base
+      default_scope do
+        if Thread.current[:company]
+          where(company_id: Thread.current[:company].id)
+        else
+          nil
+        end
+      end
+    end
+
+The best way to use this is to explictly
+ask Model to search in current company scope
+
+    class ApplicationRecord < ActiveRecord::Base
+      scope :in_current_company, -> { where(company: Thread.current[:company]) }
+    end
+
+    class Manager < ApplicationRecord; end
+
+    @managers = Manager.in_current_company
