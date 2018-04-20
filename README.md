@@ -50,7 +50,7 @@ like this:
       end
     end
 
-    config.middleware.use Rack::SubdomainCompany
+    config.middleware.use Rack::DomainFilter
 
 In your controller, you can get your current company with
 this syntax:
