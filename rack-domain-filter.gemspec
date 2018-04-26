@@ -4,7 +4,7 @@ require 'rack/domain_filter/version'
 
 Gem::Specification.new do |spec|
   spec.authors       = ['Muhammad Mufid Afif']
-  spec.description   = 'Check Gitlab Web Status via HTTP Response.'
+  spec.description   = 'Per-domain filter for Rack.'
   spec.email         = ['mufidafif@icloud.com']
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.start_with?('spec/') }
   spec.homepage      = 'https://github.com/wazaundtechnik/rack-subdomain-company'
