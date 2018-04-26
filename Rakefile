@@ -11,4 +11,4 @@ RuboCop::RakeTask.new
 require 'reek/rake/task'
 Reek::Rake::Task.new
 
-task default: %i[spec reek rubocop]
+task default: %i[spec]
