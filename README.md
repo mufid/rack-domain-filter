@@ -1,5 +1,7 @@
 # Rack Domain Filter
 
+[![Build Status](https://travis-ci.org/mufid/rack-domain-filter.svg?branch=master)](https://travis-ci.org/mufid/rack-domain-filter)
+
 ## Prerequisites
 
 - Ruby 2.1+
