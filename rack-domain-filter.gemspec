@@ -16,7 +16,6 @@ Gem::Specification.new do |spec|
   spec.version       = Rack::DomainFilter::VERSION
 
   spec.add_dependency 'rack'
-  spec.add_dependency 'activesupport'
 
   # Test and build tools
   # The test shouldn't broken by the incompatible RSpec version.
