@@ -54,15 +54,15 @@ RSpec.describe Rack::DomainFilter do
 
   describe '#match_uri' do
     before do
-      config.filter_for /(.+).local.dev/ do |slug|
+      config.filter_for(/(.+).local.dev/) do |slug|
         Thread.current[:company] = "#{slug}_test"
       end
 
-      config.filter_for /(.+).peentar.id/ do |slug|
+      config.filter_for(/(.+).peentar.id/) do |slug|
         Thread.current[:company] = "#{slug}_production"
       end
 
-      config.filter_for /(.+).peentar.id/ do |slug|
+      config.filter_for(/(.+).peentar.id/) do |slug|
         Thread.current[:company] = "#{slug}_production"
       end
 
