@@ -15,6 +15,9 @@ Gem::Specification.new do |spec|
   spec.summary       = spec.description
   spec.version       = Rack::DomainFilter::VERSION
 
+  # Test v2.6 after release
+  spec.required_ruby_version = ['>= 2.1', '< 2.6']
+
   spec.add_dependency 'rack'
 
   # Test and build tools
