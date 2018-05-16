@@ -19,6 +19,10 @@ module Rack
 
         @no_match = block
       end
+
+      def skip_path_for(pattern)
+        @skip_path_patterns << pattern
+      end
     end
 
     # private
@@ -27,12 +31,14 @@ module Rack
       attr_accessor :uri_mapping
       attr_accessor :after_requests_list
       attr_accessor :exception_catcher_mapping
+      attr_accessor :skip_path_patterns
 
       def initialize
         @uri_mapping = {}
         @after_requests_list = []
         @exception_catcher_mapping = {}
         @no_match = nil
+        @skip_path_patterns = []
       end
 
       include ConfigurationDSL

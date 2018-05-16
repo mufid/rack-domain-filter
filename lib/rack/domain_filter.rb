@@ -10,20 +10,26 @@ module Rack
       @match_found = false
     end
 
-    def call(env)
-      match_uri(env)
-
-      if !@match_found && can_respond_no_match?
-        result = trigger_no_match(env)
-        run_after_request
-        return result
-      end
-
-      result = @app.call(env)
+    def wrap_call
+      result = yield
 
       run_after_request
 
       result
+    end
+
+    def call(env)
+      if can_skip_path?(env)
+        return wrap_call { @app.call(env) }
+      end
+
+      match_uri(env)
+
+      if !@match_found && can_respond_no_match?
+        return wrap_call { trigger_no_match(env) }
+      end
+
+      wrap_call { @app.call(env) }
     rescue => e
       result = catch_exception(e)
       run_after_request

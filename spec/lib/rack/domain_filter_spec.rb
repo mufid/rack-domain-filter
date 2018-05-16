@@ -116,6 +116,26 @@ RSpec.describe Rack::DomainFilter do
     end
   end
 
+  describe '#skip_for' do
+    before do
+      config.no_match do
+        [404, {'Content-Type' => 'text/plain'}, ["nothing found!"]]
+      end
+
+      config.skip_path_for '/fractalstory'
+    end
+
+    it 'actually works' do
+      expect(Thread.current[:company]).to be_nil
+
+      request '/cihuy', 'HTTP_HOST' => 'kucing-lucu.local.dev'
+      expect(last_response.body).to eq('nothing found!')
+
+      request '/fractalstory', 'HTTP_HOST' => 'kucing.peentar.id'
+      expect(last_response.body).to eq('All responses are OK')
+    end
+  end
+
   describe 'Configuration' do
   end
 end

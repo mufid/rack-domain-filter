@@ -45,6 +45,31 @@ module Rack
 
         true
       end
+
+      def can_skip_path?(env)
+        req = Rack::Request.new(env)
+        skip_current_request = false
+        config.skip_path_patterns.each do |pattern|
+          break if skip_current_request
+          if pattern.is_a?(String)
+            skip_current_request ||= skip_string?(pattern, req)
+          elsif pattern.is_a?(Regexp)
+            skip_current_request ||= skip_regex?(pattern, req)
+          else
+            raise "Unknown pattern: #{pattern}. It must be a regex or a string!"
+          end
+        end
+        skip_current_request
+      end
+
+      def skip_regex?(regex, req)
+        !req.fullpath.match(regex).nil?
+      end
+
+      def skip_string?(string, req)
+        string == req.fullpath
+      end
+
     end
   end
 end
