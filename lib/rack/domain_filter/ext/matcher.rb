@@ -63,11 +63,11 @@ module Rack
       end
 
       def skip_regex?(regex, req)
-        !req.fullpath.match(regex).nil?
+        !req.path.match(regex).nil?
       end
 
       def skip_string?(string, req)
-        string == req.fullpath
+        string == req.path
       end
 
     end

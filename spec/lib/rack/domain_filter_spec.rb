@@ -123,10 +123,17 @@ RSpec.describe Rack::DomainFilter do
       end
 
       config.skip_path_for '/fractalstory'
+      config.skip_path_for (/wowkeren/)
     end
 
     it 'actually works' do
       expect(Thread.current[:company]).to be_nil
+
+      request '/fractalstory?cumi=enak', 'HTTP_HOST' => 'kucing.peentar.id'
+      expect(last_response.body).to eq('All responses are OK')
+
+      request '/wowkeren', 'HTTP_HOST' => 'kucing.peentar.id'
+      expect(last_response.body).to eq('All responses are OK')
 
       request '/cihuy', 'HTTP_HOST' => 'kucing-lucu.local.dev'
       expect(last_response.body).to eq('nothing found!')
